@@ -13,6 +13,258 @@ Accurate requirements improve cost, schedule, and risk management while maintain
 Ultimately, they serve as the foundation for consistent understanding and long-term project sustainability.
 
 
+# Acceptance Criteria
+
+## Importance of Acceptance Criteria in Requirement Analysis
+
+Acceptance Criteria are a fundamental component of requirement analysis that define the specific conditions that must be met for a software feature to be considered complete and acceptable by stakeholders. They serve as the critical bridge between high-level requirements and detailed, testable specifications.
+
+### Key Importance
+
+**1. Clear Definition of Done**
+- Provides unambiguous conditions for when a feature is considered complete
+- Eliminates ambiguity about what constitutes a working feature
+- Sets concrete expectations for developers, testers, and stakeholders
+
+**2. Prevents Scope Creep**
+- Establishes clear boundaries for each feature
+- Helps teams avoid gold-plating (adding unnecessary features)
+- Provides a reference point when evaluating change requests
+
+**3. Foundation for Testing**
+- Serves as the basis for creating test cases
+- Ensures comprehensive test coverage of all requirements
+- Enables testers to verify feature functionality objectively
+
+**4. Improved Communication**
+- Creates a shared understanding among all team members
+- Reduces misinterpretation between technical and non-technical stakeholders
+- Facilitates better collaboration between development, QA, and product teams
+
+**5. Quality Assurance**
+- Ensures the delivered feature meets business and user needs
+- Provides measurable standards for quality assessment
+- Helps identify potential issues early in the development process
+
+**6. User Story Completion**
+- Completes user stories by adding specific, testable conditions
+- Turns vague requirements into actionable development tasks
+- Ensures each user story delivers actual value to end users
+
+## Example: Acceptance Criteria for Checkout Feature
+
+### Feature: Hotel Booking Checkout Process
+**User Story:** As a guest, I want to complete my hotel booking quickly and securely so that I can confirm my reservation and receive booking confirmation.
+
+
+### Use Case Diagrams
+
+# Use Case Diagrams
+
+## What are Use Case Diagrams?
+
+Use Case Diagrams are a type of Unified Modeling Language (UML) diagram that visually represents the interactions between actors (users or external systems) and a system. They capture the functional requirements and scope of a system by showing the various ways users can interact with it to achieve specific goals.
+
+### Key Components:
+
+- **Actors:** Roles played by users or external systems that interact with the system
+- **Use Cases:** Specific functionalities or features the system provides
+- **Associations:** Lines connecting actors to use cases they participate in
+- **System Boundary:** A box that defines the scope of the system being modeled
+
+## Benefits of Use Case Diagrams
+
+**1. Clear Requirement Visualization**
+- Provides a high-level overview of system functionality
+- Shows how different users interact with the system
+- Helps stakeholders understand system scope without technical details
+
+**2. Improved Communication**
+- Serves as a common language between technical and non-technical stakeholders
+- Facilitates discussions about system requirements and user interactions
+- Helps identify missing requirements early in the development process
+
+**3. Scope Management**
+- Clearly defines system boundaries
+- Helps prevent scope creep by establishing what's in and out of scope
+- Identifies all user roles and their responsibilities
+
+**4. Foundation for Development**
+- Guides the creation of detailed use case specifications
+- Informs database design and architecture decisions
+- Helps identify necessary APIs and external integrations
+
+**5. Testing Guidance**
+- Provides basis for test case development
+- Helps ensure all user interactions are tested
+- Identifies different user scenarios that need validation
+
+## Booking System Use Case Diagram
+
+![ALX Booking System Use Case Diagram](alx-booking-uc.png)
+
+### Actors in the Booking System:
+
+1. **Guest:** End user who searches for and books properties
+2. **Host:** Property owner who manages listings and bookings
+3. **Admin:** System administrator who manages users and content
+4. **Payment Gateway:** External system that processes payments
+5. **Email Service:** External system that handles notifications
+
+### Use Cases:
+
+**Guest-Related Use Cases:**
+- Register Account
+- Login to System
+- Search Properties
+- View Property Details
+- Make Booking
+- Manage Bookings (View/Cancel)
+- Make Payment
+- Write Review
+
+**Host-Related Use Cases:**
+- Register as Host
+- Manage Property Listings
+- Set Availability Calendar
+- Manage Booking Requests
+- Update Pricing
+- View Performance Analytics
+- Manage Payouts
+
+**Admin-Related Use Cases:**
+- Manage Users
+- Moderate Properties
+- View System Reports
+- Manage System Configuration
+- Handle Disputes
+
+**System Use Cases:**
+- Process Payment (with Payment Gateway)
+- Send Notifications (with Email Service)
+- Update Search Index
+- Generate Reports
+
+### Relationships:
+- **Include Relationships:** Complex use cases that require other use cases
+- **Extend Relationships:** Optional behaviors that extend base use cases
+- **Generalization:** Specialized actors inheriting from more general ones
+
+### Acceptance Criteria
+
+**AC-1: Booking Summary Display**
+- **Given** the user has selected a hotel room and dates
+- **When** the user navigates to the checkout page
+- **Then** the system shall display:
+  - Hotel name, room type, and selected dates
+  - Total number of nights
+  - Base room rate per night
+  - Itemized additional charges (taxes, service fees, cleaning fees)
+  - Grand total amount in the selected currency
+  - Cancellation policy summary
+
+**AC-2: Guest Information Validation**
+- **Given** the user is on the checkout page
+- **When** the user enters guest information
+- **Then** the system shall:
+  - Require first name, last name, and email address
+  - Validate email format (must contain @ and valid domain)
+  - Make phone number optional but validate format if provided
+  - Show real-time validation errors with clear messages
+  - Prevent proceeding to payment with invalid information
+
+**AC-3: Payment Method Processing**
+- **Given** the user has entered valid guest information
+- **When** the user selects a payment method
+- **Then** the system shall:
+  - Support credit/debit card payments (Visa, MasterCard, American Express)
+  - Support at least one digital wallet (Google Pay, Apple Pay)
+  - Display appropriate input fields for the selected payment method
+  - Validate card number using Luhn algorithm
+  - Validate expiration date (must be future date)
+  - Validate CVV code (3-4 digits)
+  - Mask sensitive payment information during input
+
+**AC-4: Secure Payment Processing**
+- **Given** the user has entered valid payment information
+- **When** the user clicks "Complete Booking"
+- **Then** the system shall:
+  - Encrypt all payment data during transmission (TLS 1.3)
+  - Process payment through the designated payment gateway
+  - Handle payment failures gracefully with specific error messages
+  - Show loading indicator during payment processing
+  - Not store raw payment card data in system databases
+  - Provide payment processing status updates
+
+**AC-5: Booking Confirmation**
+- **Given** the payment has been successfully processed
+- **When** the booking is confirmed
+- **Then** the system shall:
+  - Generate a unique booking confirmation number
+  - Display immediate on-screen confirmation with booking details
+  - Send confirmation email within 5 minutes containing:
+    - Booking confirmation number
+    - Hotel details and check-in/check-out dates
+    - Total amount charged
+    - Cancellation policy details
+    - Hotel contact information
+  - Update room availability in real-time
+  - Create booking record in the database with "confirmed" status
+
+**AC-6: Error Handling and Edge Cases**
+- **Given** various exceptional scenarios during checkout
+- **When** errors occur
+- **Then** the system shall:
+  - Display "Room no longer available" if booking conflicts occur
+  - Show "Payment declined" with retry option for failed payments
+  - Handle session timeouts by preserving entered data where possible
+  - Provide clear instructions for resolving common payment issues
+  - Log all checkout failures for monitoring and analysis
+
+**AC-7: Performance Requirements**
+- **Given** normal system load conditions
+- **When** users complete the checkout process
+- **Then** the system shall:
+  - Load the checkout page within 3 seconds
+  - Process payments within 10 seconds
+  - Send confirmation emails within 5 minutes
+  - Support 100 concurrent checkout sessions during peak hours
+  - Maintain data consistency throughout the booking process
+
+**AC-8: Mobile Responsiveness**
+- **Given** the user accesses checkout on a mobile device
+- **When** completing the booking process
+- **Then** the system shall:
+  - Display all form fields and buttons appropriately on mobile screens
+  - Support mobile-optimized payment methods (digital wallets)
+  - Maintain functionality and usability on screens as small as 320px wide
+  - Provide touch-friendly interface elements
+
+### Verification Methods
+Each acceptance criterion should be verified through:
+- **Manual Testing:** QA team validates each scenario
+- **Automated Testing:** Integration tests for payment processing
+- **User Acceptance Testing:** Real users validate the complete flow
+- **Performance Testing:** Load testing for concurrent checkouts
+- **Security Testing:** Penetration testing for payment security
+
+### Definition of Ready (DoR)
+The checkout feature is ready for development when:
+- All acceptance criteria are clearly defined and agreed upon
+- UI/UX designs are finalized and approved
+- Payment gateway integration specifications are documented
+- API contracts for external services are defined
+
+### Definition of Done (DoD)
+The checkout feature is considered complete when:
+- All acceptance criteria are met and verified
+- Code has passed code review and quality gates
+- All automated tests are passing
+- Feature is deployed to staging environment
+- UAT has been successfully completed
+- Documentation has been updated
+- Performance and security requirements are validated
+
 ## Why is Requirement Analysis Important?
 
 1. It Establishes a Clear and Unambiguous Foundation, Preventing Scope Creep and Costly Rework
